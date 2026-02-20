@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore Restaurants - MealBuddy</title>
+    <link rel="stylesheet" href="{% static 'customer_home.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Welcome, {{ username }} 👋</h1>
+    <p class="subtitle">Explore restaurants near you</p>
+
+    <div class="restaurant-grid">
+        {% for r in restaurantList %}
+        <div class="restaurant-card">
+
+            <img src="{{ r.picture }}" class="restaurant-img">
+
+            <div class="card-content">
+                <h3>{{ r.name }}</h3>
+                <p class="cuisine">{{ r.cuisine }}</p>
+
+                <div class="rating">
+                    ⭐ {{ r.rating }}
+                </div>
+
+                <a href="{% url 'view_menu' r.id username %}" class="view-btn">
+                    View Menu
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

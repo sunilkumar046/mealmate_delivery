@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmed - MealBuddy</title>
+    <link rel="stylesheet" href="{% static 'orders.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="success-card">
+
+        <div class="success-icon">✅</div>
+
+        <h1>Order Confirmed!</h1>
+        <p class="welcome">
+            Thank you, <strong>{{ username }}</strong> 🎉
+        </p>
+
+        <div class="address-box">
+            <h3>Delivery Address</h3>
+            <p>{{ customer.address }}</p>
+        </div>
+
+        <p class="info-text">
+            Your delicious food is being prepared and will be delivered shortly 🚚
+        </p>
+
+        {% if cart_items %}
+            <a href="{% url 'customer_menu' cart_items.0.restaurant.id username %}" 
+               class="back-btn">
+               Continue Ordering
+            </a>
+        {% else %}
+            <a href="/" class="back-btn">
+                Back to Home
+            </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

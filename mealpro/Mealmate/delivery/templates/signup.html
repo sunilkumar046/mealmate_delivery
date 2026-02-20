@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - MealBuddy</title>
+    <link rel="stylesheet" href="{% static 'signup.css' %}">
+</head>
+<body>
+
+<div class="signup-container">
+    <div class="signup-card">
+        <h2>Create Account</h2>
+        <p>Join MealBuddy and order your favorite food 🍽</p>
+
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Mobile</label>
+                <input type="text" name="mobile" required>
+            </div>
+
+            <div class="input-group">
+                <label>Address</label>
+                <textarea name="address" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="signup-btn">Create Account</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="{% url 'open_signin' %}">Sign In</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

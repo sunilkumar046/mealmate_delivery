@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants - MealBuddy</title>
+   <link rel="stylesheet" href="{% static 'show_restaurant.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Restaurant Management</h1>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Picture</th>
+                    <th>Cuisine</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in restaurantList %}
+                <tr>
+                    <td>{{ r.name }}</td>
+
+                    <td>
+                        <img src="{{ r.picture }}" class="restaurant-img">
+                    </td>
+
+                    <td>{{ r.cuisine }}</td>
+
+                    <td>
+                        ⭐ {{ r.rating }}
+                    </td>
+
+                    <td class="actions">
+                        <a href="{% url 'open_update_restaurant' r.id %}" class="btn edit">Update</a>
+                        <a href="{% url 'delete_restaurant' r.id %}" class="btn delete">Delete</a>
+                        <a href="{% url 'open_update_menu' r.id %}" class="btn menu">Menu</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

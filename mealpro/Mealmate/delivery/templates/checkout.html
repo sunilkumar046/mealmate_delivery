@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - MealBuddy</title>
+    <link rel="stylesheet" href="{% static 'checkout.css' %}">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="checkout-card">
+
+        <h1>Checkout</h1>
+        <p class="welcome">Hello, {{ username }} 👋</p>
+
+        {% if error %}
+            <div class="error-box">
+                {{ error }}
+            </div>
+        {% else %}
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>₹ {{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <h3>Total</h3>
+                <h3>₹ {{ total_price }}</h3>
+            </div>
+        </div>
+
+        <button id="rzp-button" class="pay-btn">
+            Pay with Razorpay
+        </button>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<script>
+var options = {
+    "key": "{{ razorpay_key_id }}",
+    "amount": "{{ total_price|floatformat:2|add:'0.00'|floatformat:2 }}00",
+    "currency": "INR",
+    "name": "MealBuddy",
+    "description": "Order Payment",
+    "order_id": "{{ order_id }}",
+    "handler": function (response) {
+        alert("Payment Successful!");
+        window.location.href = "{% url 'orders' username %}";
+    },
+    "prefill": {
+        "name": "{{ username }}",
+        "email": "customer@example.com",
+        "contact": "9999999999"
+    },
+    "theme": {
+        "color": "#16a34a"
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById('rzp-button').onclick = function(e) {
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+</body>
+</html>

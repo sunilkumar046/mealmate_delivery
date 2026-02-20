@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Management - MealBuddy</title>
+    <link rel="stylesheet" href="../static/update_menu.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Menu Management</h1>
+
+    <!-- Current Menu -->
+    <div class="table-card">
+        <h2>Current Menu Items</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Veg</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itemList %}
+                <tr>
+                    <td>{{ item.name }}</td>
+
+                    <td>
+                        <img src="{{ item.picture }}" class="item-img">
+                    </td>
+
+                    <td>{{ item.description }}</td>
+
+                    <td>₹ {{ item.price }}</td>
+
+                    <td>
+                        {% if item.vegeterian %}
+                            🟢 Veg
+                        {% else %}
+                            🔴 Non-Veg
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Add New Item -->
+    <div class="form-card">
+        <h2>Add New Menu Item</h2>
+
+        <form action="{% url 'update_menu' restaurant.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Item Name</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Description</label>
+                <textarea name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Price</label>
+                <input type="number" name="price" step="0.01" required>
+            </div>
+
+            <div class="input-group checkbox-group">
+                <label>
+                    <input type="checkbox" name="vegeterian">
+                    Vegetarian
+                </label>
+            </div>
+
+            <div class="input-group">
+                <label>Image URL</label>
+                <input type="url" name="picture">
+            </div>
+
+            <button type="submit" class="submit-btn">Add Item</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

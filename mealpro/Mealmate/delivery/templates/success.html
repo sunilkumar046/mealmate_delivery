@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful - MealBuddy</title>
+    <link rel="stylesheet" href="{% static 'success.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="success-card">
+
+        <div class="icon">🎉</div>
+
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p class="message">
+            You have successfully signed in.
+        </p>
+
+        <a href="{% url 'customer_home' user.username %}" class="btn">
+            Continue to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
