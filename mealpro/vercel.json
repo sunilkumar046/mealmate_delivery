@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "buildCommand": "cd Mealmate && pip install -r ../requirements.txt && python manage.py collectstatic --noinput || true",
+  "builds": [
+    {
+      "src": "Mealmate/Mealmate/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "Mealmate/staticfiles/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "Mealmate/Mealmate/wsgi.py"
+    }
+  ],
+  "env": {
+    "PYTHONUNBUFFERED": "1"
+  }
+}

@@ -1,0 +1,1 @@
+web: cd mealpro/Mealmate && gunicorn Mealmate.wsgi --log-file -
